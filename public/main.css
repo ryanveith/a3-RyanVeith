@@ -1,0 +1,26 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background:black;
+  color:white;
+}
+ul {
+  list-style: none;
+}
+li {
+  margin: 2%;
+}
+
+#layout {
+  background-color: blueviolet;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 1%;
+  padding: 1%;
+}
+
+.item {
+  background-color: darkcyan;
+  width: 44%;
+  border: 2vw violet solid;
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset='utf-8' />
+    <script src='js/main.js'></script>
+    <link rel='stylesheet' href='main.css' />
+    
+    <!-- get rid of favicon error -->
+    <link rel='icon' href='data:;base64,iVBORw0KGgo=' />
+  </head>
+  <body>
+    <div id="layout">
+      <form class="item">
+        <select id='option'>
+          <option>Add Score</option>
+          <option>Modify Score</option>
+          <option>Delete Score</option>
+        </select>
+        <input type='text' id='username' value=''placeholder='enter your username'>
+        <input type='text' id='highscore' value='' placeholder='enter your score here'>
+        <button>submit</button>
+      </form>
+
+      <section class="item">
+        <h2 >Highscores</h2>
+        <ul id = 'scoretable'>
+          <li>
+            Submit a Score to see how how it compares to other highscores
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
