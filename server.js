@@ -57,20 +57,13 @@ async function run() {
 run().catch(console.dir);
 
 
-
 // Express server stuff
 const express = require( 'express' ),
     app = express()
 
-// Next is used to say this funciton is done, this is important since with async returning might not be finished
-const logger = (req,res,next) => {
-  console.log( 'url:', req.url )
-  next()
-}
-
-//app.use( logger )
-
 app.use( express.static('public') )
+
+app.use( express.json() )
 
 app.get( '/', ( req, res ) => {
     res.writeHead( 200, { 'Content-Type': 'application/json' })
@@ -78,8 +71,9 @@ app.get( '/', ( req, res ) => {
     } )
 
 app.post( '/submit', (req, res) => {
-  res.writeHead( 200, { 'Content-Type': 'application/json' })
-  res.end( JSON.stringify( "Hello world" ) )
+    console.log(req.body)
+    res.writeHead( 200, { 'Content-Type': 'application/json' })
+    res.end( JSON.stringify( "Hello world" ) )
 })
 
 app.listen( process.env.PORT || 3000 )

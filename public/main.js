@@ -12,12 +12,12 @@ const submit = async function( event ) {
         username = document.querySelector( '#username' ),
         score = document.querySelector( '#highscore' ),
         today = new Date().toISOString().slice(0, 10), 
-        json = { option: mode.value, username: username.value, highscore: score.value, date: today},
-        body = JSON.stringify( json )
+        json = { option: mode.value, username: username.value, highscore: score.value, date: today}
 
     const response = await fetch( '/submit', {
         method:'POST',
-        body 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( json ) 
     })
 
     const text = await response.text()
