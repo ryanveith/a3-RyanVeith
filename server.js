@@ -65,12 +65,24 @@ app.use( express.static('public') )
 
 app.use( express.json() )
 
+// I mean really both are already being served as static files, but here is some code anyways
 app.get( '/', ( req, res ) => {
     res.writeHead( 200, { 'Content-Type': 'application/json' })
     res.end( JSON.stringify( 'Hello World!' ) )
     } )
+app.get( '/home.html', ( req, res ) => {
+    res.writeHead( 200, { 'Content-Type': 'application/json' })
+    res.end( JSON.stringify( 'Hi Planet!' ) )
+} )
 
 app.post( '/submit', (req, res) => {
+    console.log(req.body)
+    res.writeHead( 200, { 'Content-Type': 'application/json' })
+    res.end( JSON.stringify( "Hello world" ) )
+})
+
+app.post( '/login', (req, res) => {
+    console.log("log in attempet")
     console.log(req.body)
     res.writeHead( 200, { 'Content-Type': 'application/json' })
     res.end( JSON.stringify( "Hello world" ) )
