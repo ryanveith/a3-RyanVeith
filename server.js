@@ -1,4 +1,9 @@
 require("dotenv").config()
+// Express const
+const express = require( 'express' ),
+    app = express(),
+    user = "" 
+
 // Mongo DB stuff
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.MY_USERNAME}:${process.env.PASSWORD}@${process.env.DATABASE_URL}/?appName=CS4241-Webware`; 
@@ -27,6 +32,36 @@ async function run() {
             }
         })
 
+        //normal routes
+        // I mean really both are already being served as static files, but here is some code anyways
+        app.get( '/', ( req, res ) => {
+            res.writeHead( 200, { 'Content-Type': 'application/json' })
+            res.end( JSON.stringify( 'Hello World!' ) )
+        } )
+        app.get( '/home.html', async ( req, res ) => {
+            if (collection !== null) {
+                const docs = await collection.find({}).toArray()
+            }
+            res.writeHead( 200, { 'Content-Type': 'application/json' })
+            res.end( JSON.stringify( docs ) )
+        } )
+
+        app.post( '/submit', async (req, res) => {
+            console.log(req.body)
+            const result = await collection.insertOne( req.body )
+            //res.json( result )
+            console.log("sucess?")
+            res.writeHead( 200, { 'Content-Type': 'application/json' })
+            res.end( JSON.stringify( "Hello world" ) )
+        })
+
+        app.post( '/login', (req, res) => {
+            console.log("log in attempet")
+            console.log(req.body)
+            res.writeHead( 200, { 'Content-Type': 'application/json' })
+            res.end( JSON.stringify( "Hello world" ) )
+        })
+
         //other routes
         app.post( '/add', async (req,res) => {
             const result = await collection.insertOne( req.body )
@@ -47,6 +82,7 @@ async function run() {
                 { $set:{ name:req.body.name } }
             )
         res.json( result )
+        
 })
 
     } finally {
@@ -54,39 +90,11 @@ async function run() {
         //await client.close();
     }
 }
-run().catch(console.dir);
-
-
-// Express server stuff
-const express = require( 'express' ),
-    app = express(),
-    user = "" 
 
 app.use( express.static('public') )
 
 app.use( express.json() )
 
-// I mean really both are already being served as static files, but here is some code anyways
-app.get( '/', ( req, res ) => {
-    res.writeHead( 200, { 'Content-Type': 'application/json' })
-    res.end( JSON.stringify( 'Hello World!' ) )
-    } )
-app.get( '/home.html', ( req, res ) => {
-    res.writeHead( 200, { 'Content-Type': 'application/json' })
-    res.end( JSON.stringify( 'Hi Planet!' ) )
-} )
-
-app.post( '/submit', (req, res) => {
-    console.log(req.body)
-    res.writeHead( 200, { 'Content-Type': 'application/json' })
-    res.end( JSON.stringify( "Hello world" ) )
-})
-
-app.post( '/login', (req, res) => {
-    console.log("log in attempet")
-    console.log(req.body)
-    res.writeHead( 200, { 'Content-Type': 'application/json' })
-    res.end( JSON.stringify( "Hello world" ) )
-})
+run().catch(console.dir);
 
 app.listen( process.env.PORT || 3000 )
