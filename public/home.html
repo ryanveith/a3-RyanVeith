@@ -10,6 +10,9 @@
     <link rel='icon' href='data:;base64,iVBORw0KGgo=' />
   </head>
   <body>
+    <header>
+      <button type="button" onclick="logout()"> Log Out</button>
+    </header>
     <div id="layout">
       <form class="item">
         <select id='option'>
@@ -19,7 +22,7 @@
         </select>
         <input type='text' id='username' value=''placeholder='enter your username'>
         <input type='text' id='highscore' value='' placeholder='enter your score here'>
-        <button>submit</button>
+        <button type="button" onclick="customSubmit()" >submit</button>
       </form>
 
       <section class="item">

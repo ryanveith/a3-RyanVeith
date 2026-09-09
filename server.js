@@ -59,7 +59,8 @@ run().catch(console.dir);
 
 // Express server stuff
 const express = require( 'express' ),
-    app = express()
+    app = express(),
+    user = "" 
 
 app.use( express.static('public') )
 

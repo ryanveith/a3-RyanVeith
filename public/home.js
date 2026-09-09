@@ -1,13 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 //let ul = null
 
-const submit = async function( event ) {
-    // stop form submission from trying to load
-    // a new .html page for displaying results...
-    // this was the original browser behavior and still
-    // remains to this day
-    event.preventDefault()
-    
+const customSubmit = async function() {
     const mode = document.querySelector( '#option' ),
         username = document.querySelector( '#username' ),
         score = document.querySelector( '#highscore' ),
@@ -53,7 +47,16 @@ const submit = async function( event ) {
     document.getElementById('scoretable').innerHTML = dataToDisplay.replaceAll(/(<[^l][^i][^>])|([^<][^l][^i]>)/g, "")
 }
 
+const logout = async function( event ) {
+    //event.preventDefault()
+    console.log("logging out")
+    window.location.href = '/'
+    
+}
+
+/*
 window.onload = function() {
     const button = document.querySelector('button')
     button.onclick = submit 
 }
+*/
