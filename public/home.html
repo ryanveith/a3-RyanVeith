@@ -4,6 +4,7 @@
     <title>CS4241 Assignment 2</title>
     <meta charset='utf-8' />
     <script src='/home.js'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
     <link rel='stylesheet' href='main.css' />
     
     <!-- get rid of favicon error -->
@@ -14,50 +15,14 @@
       <button type="button" onclick="logout()"> Log Out</button>
     </header>
     
-    <form>
-      <p>
-        Welcome back "username"!
-      </p>
-      <ul>
-      <legend>What would you like to do</legend>
-        <li>
-          <label>
-            <input id = "whatToDo1" name="whatToDo" value="1" type = "radio">
-            Change Username 
-          </label>
-        </li>
-        <li>
-          <label>
-            <input id = "whatToDo2" name="whatToDo" value="2" type = "radio">
-            Change Password
-          </label>
-        </li>
-        <li>
-          <label>
-            <input id = "whatToDo3" name="whatToDo" value="3" type = "radio">
-            Change Profile picture
-          </label>
-        </li>
-        <li>
-          <label>
-            <input id = "whatToDo4" name="whatToDo" value="4" type = "radio">
-            Modify scroes for games
-          </label>
-        </li>
-      </ul>
-      <button> Get Started</button>
+    <form class="pure-form pure-form-stacked" id="home">
+      
     </form>
+
 
     <div id="layout">
       <form class="item">
-        <select id='option'>
-          <option>Add Score</option>
-          <option>Modify Score</option>
-          <option>Delete Score</option>
-        </select>
-        <input type='text' id='username' value=''placeholder='enter your username'>
-        <input type='text' id='highscore' value='' placeholder='enter your score here'>
-        <button type="button" onclick="customSubmit()" >submit</button>
+        
       </form>
 
       <section class="item">

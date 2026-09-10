@@ -50,7 +50,7 @@ async function run() {
             console.log(req.body)
             const result = await collection.insertOne( req.body )
             //res.json( result )
-            console.log("sucess?")
+            console.log("success?")
             res.writeHead( 200, { 'Content-Type': 'application/json' })
             res.end( JSON.stringify( "Hello world" ) )
         })

@@ -4,6 +4,7 @@
     <title>CS4241 Assignment 2</title>
     <meta charset='utf-8' />
     <script src='/index.js'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
     <link rel='stylesheet' href='main.css' />
     
     <!-- get rid of favicon error -->
@@ -12,12 +13,9 @@
   <body>
     <div id="layout">
       <form class="item">
-        <select id='option'>
-          <option>Log In</option>
-        </select>
         <input type='text' id='username' value=''placeholder='enter your username'>
-        <input type='text' id='password' value='' placeholder='enter your password here'>
-        <button type="button" onclick="login()" >submit</button>
+        <input type='password' id='password' value='' placeholder='enter your password here'>
+        <button type="button" onclick="login()" >Log In</button>
       </form>
 
       <section class="item">
