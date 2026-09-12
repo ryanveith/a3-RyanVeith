@@ -66,7 +66,7 @@ const updateShownData = async function() {
         method:'GET'
     })
     const text = await response.text()
-    const data  = JSON.parse(text)
+    const data = JSON.parse(text)
     let dataToDisplay = ""
     for (let i = 0; i < data.length; i++) {
         dataToDisplay += data[i].game+":"+data[i].highscore+", "
@@ -107,9 +107,9 @@ const getMenu = (`
     <p>
         Welcome back ${username}!
     </p>
+    <legend>What would you like to do</legend>
     <ul>
-        <legend>What would you like to do</legend>
-            <li>
+        <li>
         <label>
             <input id = "whatToDo1" name="whatToDo" value="1" type = "radio">
             Change Username 
@@ -170,7 +170,7 @@ const getGames = (`
 `)
 
 window.onload = async function ()  {
-    updateShownData()
     updateForm()
+    updateShownData()
 }
 

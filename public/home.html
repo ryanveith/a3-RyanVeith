@@ -4,9 +4,15 @@
     <title>CS4241 Assignment 2</title>
     <meta charset='utf-8' />
     <script src='/home.js'></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <!-- Since a goal of this project is to score 100% on lighthouse the 250ms from having to load prue was not working, so just downloaded it and that fixed that
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    -->
+    <link rel='stylesheet' href='pure-min.css' />  
     <link rel='stylesheet' href='main.css' />
     
+    <!-- Description for SEO Audit -->
+    <meta name="description" content="The login page for a simple database that lets you store highscores for games you play.">
+
     <!-- get rid of favicon error -->
     <link rel='icon' href='data:;base64,iVBORw0KGgo=' />
   </head>
@@ -14,25 +20,26 @@
     <header>
       <button type="button" onclick="logout()"> Log Out</button>
     </header>
-    
-    <form class="pure-form pure-form-stacked" id="home">
-      
-    </form>
-
-
-    <div id="layout">
-      <form class="item">
+    <main>
+      <form class="pure-form pure-form-stacked" id="home">
         
       </form>
 
-      <section class="item">
-        <h2 >Highscores</h2>
-        <ul id = 'scoretable'>
-          <li>
-            Submit a Score to see how how it compares to other highscores
-          </li>
-        </ul>
-      </section>
-    </div>
+
+      <div id="layout">
+        <form class="item">
+          
+        </form>
+
+        <section class="item">
+          <h2 >Highscores</h2>
+          <ul id = 'scoretable'>
+            <li>
+              Submit a Score to see how how it compares to other highscores
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
   </body>
 </html>

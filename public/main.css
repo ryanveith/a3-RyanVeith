@@ -1,3 +1,16 @@
+/* The pure-button is being overridden by Blueviolet which is #8A2BE2 to make the text higher contrast*/
+/* This is fine for google lighthouse and passes AA, but is not AAA compliant for small text, so I to be safe I made font size-larger*/
+.pure-button.pure-button-primary {
+  background-color: blueviolet;
+  font-size: 125%;
+}
+
+/* This is supposed to take up start of page, since this is were all user input happens*/
+/* Default sizing and look is fine but it needs to have a min-hight since data only appears after page load*/
+/* Having this prevents it from needing to recalculate page looks when hight chages after data appears*/
+form {
+  min-height: 50vh ;
+}
 
 /*body {
   font-family: 'Courier New', Courier, monospace;

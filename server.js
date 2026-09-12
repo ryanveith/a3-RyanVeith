@@ -27,8 +27,11 @@ async function run() {
         // route to get all docs
         app.get("/docs", async (req, res) => {
             if (collection !== null) {
-            const docs = await collection.find({}).toArray()
-            res.json( docs )
+                const docs = await collection.find({}).toArray()
+                res.json( docs )
+            }
+            else {
+                res.json({})
             }
         })
 

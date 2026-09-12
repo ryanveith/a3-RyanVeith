@@ -4,28 +4,35 @@
     <title>CS4241 Assignment 2</title>
     <meta charset='utf-8' />
     <script src='/index.js'></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
-    <link rel='stylesheet' href='main.css' />
+    <!-- Since a goal of this project is to score 100% on lighthouse the 250ms from having to load prue was not working, so just downloaded it and that fixed that
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    -->
+    <link rel='stylesheet' href='pure-min.css' />  <link rel='stylesheet' href='main.css' />
+   
+    <!-- Description for SEO Audit -->
+    <meta name="description" content="The login page for a simple database that lets you store highscores for games you play.">
     
     <!-- get rid of favicon error -->
     <link rel='icon' href='data:;base64,iVBORw0KGgo=' />
   </head>
   <body>
-    <div id="layout">
-      <form class="item">
-        <input type='text' id='username' value=''placeholder='enter your username'>
-        <input type='password' id='password' value='' placeholder='enter your password here'>
-        <button type="button" onclick="login()" >Log In</button>
-      </form>
+    <main>
+      <div id="layout">
+        <form class="item">
+          <input type='text' id='username' value=''placeholder='enter your username'>
+          <input type='password' id='password' value='' placeholder='enter your password here'>
+          <button type="button" onclick="login()" >Log In</button>
+        </form>
 
-      <section class="item">
-        <h2 >Highscores</h2>
-        <ul id = 'scoretable'>
-          <li>
-            Please Log In
-          </li>
-        </ul>
-      </section>
-    </div>
+        <section class="item">
+          <h2 >Highscores</h2>
+          <ul id = 'scoretable'>
+            <li>
+              Please Log In
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
   </body>
 </html>
