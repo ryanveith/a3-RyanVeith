@@ -60,41 +60,34 @@ async function run() {
             }
             else if (req.body.option == "Add Score") {
                 //add game score pair to collection
-                const result = await collection.insertOne( {"game": req.body.game, "highscore": req.body.highscore} )
+                const result = await collection.insertOne({
+                    "game": req.body.game, "highscore": req.body.highscore
+                })
+                // return result of this call to db
+                res.writeHead( 200, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( result ) )
             }
             else if (req.body.option == "Modify Score") {
                 //modify score for game
-                console.log("before find")
-                const result = await collection.findOne( {
-                    game:"bob"
+                const result = await collection.updateOne({
+                    "game":req.body.game}, {
+                    $set:{ 
+                        "highscore":req.body.highscore
+                    }
                 })
-                if (result == null) {
-                    //you cannot modify somthing that does not exist
-                }
-                else {
-                    const modification = await collection.updateOne({
-                        game:"bob"}, {
-                        $set:{ 
-                            "highscore":req.body.highscore
-                        }
-                    })
-                    console.log(modification)
-                }
-                console.log("result of find")
-                console.log(result)
+                // return result of this call to db
+                res.writeHead( 200, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( result ) )
             }
             else if (req.body.option == "Delete Score") {
                 //remove game and score from collection
                 const result = await collection.deleteOne({ 
-                    _id:new ObjectId( req.body._id ) 
-                })    
+                    "game":req.body.game
+                })
+                // return result of this call to db
+                res.writeHead( 200, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( result ) )    
             }
-
-            //const result = await collection.insertOne( req.body )
-            //res.json( result )
-            //console.log("success?")
-            //res.writeHead( 200, { 'Content-Type': 'application/json' })
-            //res.end( JSON.stringify( "Hello world" ) )
         })
 
         app.post( '/login', (req, res) => {
@@ -104,31 +97,9 @@ async function run() {
             res.end( JSON.stringify( "Hello world" ) )
         })
 
-        //other routes
-        app.post( '/add', async (req,res) => {
-            const result = await collection.insertOne( req.body )
-            res.json( result )
-        })
-
-        // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
-        app.post( '/remove', async (req,res) => {
-            const result = await collection.deleteOne({ 
-                _id:new ObjectId( req.body._id ) 
-            })    
-            res.json( result )
-        })
-
-        app.post( '/update', async (req,res) => {
-            const result = await collection.updateOne(
-                { _id: new ObjectId( req.body._id ) },
-                { $set:{ name:req.body.name } }
-            )
-        res.json( result )
-        
-})
-
     } finally {
         // Ensures that the client will close when you finish/error
+        // But this happens when you stop running the server anyways so just keep it open rather then reopen it for every call
         //await client.close();
     }
 }
