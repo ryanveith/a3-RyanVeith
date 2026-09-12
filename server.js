@@ -48,11 +48,53 @@ async function run() {
 
         app.post( '/submit', async (req, res) => {
             console.log(req.body)
-            const result = await collection.insertOne( req.body )
+            if (req.body.option == "Change Username") {
+                //rename collection to new username
+                // db.collection.renameCollection()
+            }
+            else if (req.body.option == "Change Password") {
+                //change password stored in collection
+            }
+            else if (req.body.option == "Change Profile Picture") {
+                //change picture stored in collection
+            }
+            else if (req.body.option == "Add Score") {
+                //add game score pair to collection
+                const result = await collection.insertOne( {"game": req.body.game, "highscore": req.body.highscore} )
+            }
+            else if (req.body.option == "Modify Score") {
+                //modify score for game
+                console.log("before find")
+                const result = await collection.findOne( {
+                    game:"bob"
+                })
+                if (result == null) {
+                    //you cannot modify somthing that does not exist
+                }
+                else {
+                    const modification = await collection.updateOne({
+                        game:"bob"}, {
+                        $set:{ 
+                            "highscore":req.body.highscore
+                        }
+                    })
+                    console.log(modification)
+                }
+                console.log("result of find")
+                console.log(result)
+            }
+            else if (req.body.option == "Delete Score") {
+                //remove game and score from collection
+                const result = await collection.deleteOne({ 
+                    _id:new ObjectId( req.body._id ) 
+                })    
+            }
+
+            //const result = await collection.insertOne( req.body )
             //res.json( result )
-            console.log("success?")
-            res.writeHead( 200, { 'Content-Type': 'application/json' })
-            res.end( JSON.stringify( "Hello world" ) )
+            //console.log("success?")
+            //res.writeHead( 200, { 'Content-Type': 'application/json' })
+            //res.end( JSON.stringify( "Hello world" ) )
         })
 
         app.post( '/login', (req, res) => {
