@@ -60,25 +60,35 @@ async function run() {
         await client.connect()
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 })
-        collection = await client.db("datatest").collection("test")
+        //collection = await client.db("datatest").collection("test")
         console.log("Pinged your deployment. You successfully connected to MongoDB!")
         
         // route to get all docs
         app.get("/docs", async (req, res) => {
-            //check cookies before returning a clients info
-            console.log("Reading cookies")
-            console.log('Cookies: ', req.session);
-            
-            //TODO: limit docs return to just the collection called admin
-            // Also change "datatest" above to req.session cookies and move it so it is not above because it should change on log-in/out
-
-            if (collection !== null) {
-                const docs = await collection.find({}).toArray()
-                res.json( docs )
+            // check cookies before returning a clients info
+            // Req.session returns an object, but the only cookie we care about is the login one
+            // So turn it into an array with Object.entries filter for just that one
+            // and then its [0] since its only thing in array and [1] because we only care about the value
+            const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
+                if (authenticatedUser != null) {
+                    //return collection
+                    collection = await client.db("datatest").collection(authenticatedUser)
+                    //TODO: limit docs return to just the collection called admin
+                    // Also change "datatest" above to req.session cookies and move it so it is not above because it should change on log-in/out
+                    //collection = await client.db("datatest").collection("test")
+                if (collection !== null) {
+                    const docs = await collection.find({}).toArray()
+                    console.log(docs)
+                    res.json( docs )
+                }
+                else {
+                    res.json( {} )
+                }
             }
             else {
-                res.json({})
+                res.json(JSON.stringify(["Your login seems to have timed out please log in"]) )
             }
+            
         })
 
         //normal routes
@@ -89,54 +99,69 @@ async function run() {
             res.end( JSON.stringify( 'Hello World!' ) )
         } )
         app.get( '/home.html', async ( req, res ) => {
-            if (collection !== null) {
-                const docs = await collection.find({}).toArray()
-            }
             res.writeHead( 200, { 'Content-Type': 'application/json' })
             res.end( JSON.stringify( docs ) )
         } )
 
         app.post( '/submit', async (req, res) => {
-            console.log(req.body)
-            if (req.body.option == "Change Username") {
-                //rename collection to new username
-                // db.collection.renameCollection()
+            // same thing as above for getting the user
+            const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
+            if (authenticatedUser != null) {
+                // Mess with just your data
+                collection = await client.db("datatest").collection(authenticatedUser)
+                // Do whatever option was given in submit
+                console.log(req.body)
+                if (req.body.option == "Change Username") {
+                    //rename collection to new username
+                    // db.collection.renameCollection()
+                    collection.renameCollection(req.body.newUsername)
+                }
+                else if (req.body.option == "Change Password") {
+                    //change password stored in collection
+                    const result = await collection.updateOne({
+                        "password": { $exists: true }}, {
+                        $set:{ 
+                            "password":req.body.newPassword
+                        }
+                    })
+                }
+                else if (req.body.option == "Change Profile Picture") {
+                    //change picture stored in collection
+                }
+                else if (req.body.option == "Add Score") {
+                    //add game score pair to collection
+                    const result = await collection.insertOne({
+                        "game": req.body.game, "highscore": req.body.highscore
+                    })
+                    // return result of this call to db
+                    res.writeHead( 200, { 'Content-Type': 'application/json' })
+                    res.end( JSON.stringify( result ) )
+                }
+                else if (req.body.option == "Modify Score") {
+                    //modify score for game
+                    const result = await collection.updateOne({
+                        "game":req.body.game}, {
+                        $set:{ 
+                            "highscore":req.body.highscore
+                        }
+                    })
+                    // return result of this call to db
+                    res.writeHead( 200, { 'Content-Type': 'application/json' })
+                    res.end( JSON.stringify( result ) )
+                }
+                else if (req.body.option == "Delete Score") {
+                    //remove game and score from collection
+                    const result = await collection.deleteOne({ 
+                        "game":req.body.game
+                    })
+                    // return result of this call to db
+                    res.writeHead( 200, { 'Content-Type': 'application/json' })
+                    res.end( JSON.stringify( result ) )    
+                }
             }
-            else if (req.body.option == "Change Password") {
-                //change password stored in collection
-            }
-            else if (req.body.option == "Change Profile Picture") {
-                //change picture stored in collection
-            }
-            else if (req.body.option == "Add Score") {
-                //add game score pair to collection
-                const result = await collection.insertOne({
-                    "game": req.body.game, "highscore": req.body.highscore
-                })
-                // return result of this call to db
-                res.writeHead( 200, { 'Content-Type': 'application/json' })
-                res.end( JSON.stringify( result ) )
-            }
-            else if (req.body.option == "Modify Score") {
-                //modify score for game
-                const result = await collection.updateOne({
-                    "game":req.body.game}, {
-                    $set:{ 
-                        "highscore":req.body.highscore
-                    }
-                })
-                // return result of this call to db
-                res.writeHead( 200, { 'Content-Type': 'application/json' })
-                res.end( JSON.stringify( result ) )
-            }
-            else if (req.body.option == "Delete Score") {
-                //remove game and score from collection
-                const result = await collection.deleteOne({ 
-                    "game":req.body.game
-                })
-                // return result of this call to db
-                res.writeHead( 200, { 'Content-Type': 'application/json' })
-                res.end( JSON.stringify( result ) )    
+            else {
+                res.writeHead( 403, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( "Your Login Has Timed Out Please Log In" ) )
             }
         })
 

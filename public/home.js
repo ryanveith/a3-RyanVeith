@@ -25,6 +25,11 @@ const updateUsername = async function() {
     else {
         newUsername2.setCustomValidity("")
         //POST req to change username in server
+        const response = await fetch( '/submit', {
+            method:'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify( {"option":"Change Username", "newUsername":newUsername1} ) 
+        })
     }
 }
 
@@ -37,6 +42,11 @@ const updatePassword = async function() {
     else {
         password2.setCustomValidity("")
         //POST req to change password in server
+        const response = await fetch( '/submit', {
+            method:'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify( {"option":"Change Password", "newPassword":password1} ) 
+        })
     }
 }
 
@@ -73,8 +83,12 @@ const updateShownData = async function() {
     const text = await response.text()
     const data = JSON.parse(text)
     let dataToDisplay = ""
+    // Data is sent back as an array with all documents 
+    console.log(data)
     for (let i = 0; i < data.length; i++) {
-        dataToDisplay += data[i].game+":"+data[i].highscore+", "
+        if (data[i].game != null) {
+            dataToDisplay += data[i].game+":"+data[i].highscore+", "
+        }
     }``
     // Overwrite the displayed scoretable with the updated version after it returns
     document.getElementById('scoretable').innerHTML = dataToDisplay.replaceAll(/(<[^l][^i][^>])|([^<][^l][^i]>)/g, "")
