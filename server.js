@@ -70,15 +70,14 @@ async function run() {
             // So turn it into an array with Object.entries filter for just that one
             // and then its [0] since its only thing in array and [1] because we only care about the value
             const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
-                if (authenticatedUser != null) {
-                    //return collection
-                    collection = await client.db("datatest").collection(authenticatedUser)
-                    //TODO: limit docs return to just the collection called admin
-                    // Also change "datatest" above to req.session cookies and move it so it is not above because it should change on log-in/out
-                    //collection = await client.db("datatest").collection("test")
+            if (authenticatedUser != null) {
+                //return collection
+                collection = await client.db("datatest").collection(authenticatedUser)
+                //TODO: limit docs return to just the collection called admin
+                // Also change "datatest" above to req.session cookies and move it so it is not above because it should change on log-in/out
+                //collection = await client.db("datatest").collection("test")
                 if (collection !== null) {
                     const docs = await collection.find({}).toArray()
-                    console.log(docs)
                     res.json( docs )
                 }
                 else {
@@ -112,12 +111,16 @@ async function run() {
                 // Do whatever option was given in submit
                 console.log(req.body)
                 if (req.body.option == "Change Username") {
+                    console.log("this operation is not currently supported")
                     //rename collection to new username
-                    // db.collection.renameCollection()
-                    collection.renameCollection(req.body.newUsername)
+                    // TODO, this is not supported before mongodb 8.1  
+                    //const result = await collection.rename(req.body.newUsername)
+                    //console.log("rename error", result)
+                    
                 }
                 else if (req.body.option == "Change Password") {
                     //change password stored in collection
+                    console.log(req.body)
                     const result = await collection.updateOne({
                         "password": { $exists: true }}, {
                         $set:{ 
@@ -165,19 +168,47 @@ async function run() {
             }
         })
 
-        app.post( '/login', (req, res) => {
-            console.log("log in attempt")
-            console.log(req.body)
-            if (req.body.username === req.body.username) {
-                req.session.login = req.body.username
-                res.writeHead( 200, { 'Content-Type': 'application/json' })
-                res.end( JSON.stringify( "Login Sucessfull" ) )
+        app.post( '/login', async (req, res) => {
+            // same as above for getting user
+            //const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
+            if (req.body.username != "") {
+                //return collection
+                collection = await client.db("datatest").collection(req.body.username)
+                const passwordToCheck = await collection.findOne({"password": { $exists: true }} )
+                if (req.body.mode === 'Login') {
+                    if (passwordToCheck == null) {
+                        res.writeHead( 401, { 'Content-Type': 'application/json' })
+                        res.end( JSON.stringify( "That Account Does Not Exist, Please Check Your Username" ) )
+                    }
+                    //Check password
+                    else if (req.body.password == passwordToCheck.password ) {
+                        req.session.login = req.body.username
+                        res.writeHead( 200, { 'Content-Type': 'application/json' })
+                        res.end( JSON.stringify( "Login Sucessfull" ) )
+                    }
+                    else {
+                        res.writeHead( 401, { 'Content-Type': 'application/json' })
+                        res.end( JSON.stringify( "Login Failed, Please Check Your Password" ) )
+                    }
+                }
+                else {
+                    // check that there is not existing account with this username
+                    if (passwordToCheck == null) {
+                        // create password
+                        const result = await collection.insertOne({
+                            "password": req.body.password
+                        })
+                        // log in
+                        req.session.login = req.body.username
+                        res.writeHead( 200, { 'Content-Type': 'application/json' })
+                        res.end( JSON.stringify( 'Login Sucessfull' ) )
+                    }
+                    else {
+                        res.writeHead( 403, { 'Content-Type': 'application/json' })
+                        res.end( JSON.stringify('There is already an account with that username, Please choose a unique username' ) )
+                    }
+                }
             }
-            else {
-                res.writeHead( 401, { 'Content-Type': 'application/json' })
-                res.end( JSON.stringify( "Login Failed" ) )
-            }
-            
         })
 
         app.post( '/logout', (req, res) => {

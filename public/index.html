@@ -17,19 +17,15 @@
     <main>
       <div id="layout">
         <form class="item">
+          <select id='option'>
+            <option>Login</option>
+            <option>Create Account</option>
+          </select>
           <input type='text' id='username' value=''placeholder='enter your username'>
           <input type='password' id='password' value='' placeholder='enter your password here'>
           <button type="button" onclick="login()" >Log In</button>
+          <div id='error' role="alert" hidden></div>
         </form>
-
-        <section class="item">
-          <h2 >Highscores</h2>
-          <ul id = 'scoretable'>
-            <li>
-              Please Log In
-            </li>
-          </ul>
-        </section>
       </div>
     </main>
   </body>

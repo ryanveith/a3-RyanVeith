@@ -1,21 +1,15 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
 let username = "Player 1"
 
 // Logout and return to default landing page for not logged in users
 const logout = async function( event ) {
-    //event.preventDefault()
-    console.log("logging out")
     const response = await fetch( '/submit', {
         method:'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( "" ) 
     })
     window.location.href = '/'
-    //Actually log out from server maybe?
-    //not using auth0 right now
 }
 
-//
 const updateUsername = async function() {
     const newUsername1 = document.querySelector( '#username1' ),
         newUsername2 = document.querySelector( '#username2' )
@@ -28,7 +22,7 @@ const updateUsername = async function() {
         const response = await fetch( '/submit', {
             method:'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify( {"option":"Change Username", "newUsername":newUsername1} ) 
+            body: JSON.stringify( {option:'Change Username', newUsername:newUsername1.value} ) 
         })
     }
 }
@@ -45,7 +39,7 @@ const updatePassword = async function() {
         const response = await fetch( '/submit', {
             method:'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify( {"option":"Change Password", "newPassword":password1} ) 
+            body: JSON.stringify( {option:'Change Password', newPassword:password1.value} ) 
         })
     }
 }
@@ -67,10 +61,9 @@ const updateGameScore = async function() {
         body: JSON.stringify( json ) 
     })
 
-    // Do something with     the response from POST
-    const text = await response.text()
-    const data  = JSON.parse(text)
-    // checking if data is not an error message woudl be ideal
+    // Do something with the response from POST
+    const data = await response.text()
+    // checking if data is not an error message would be ideal
 
     updateShownData()    
 }
@@ -81,15 +74,15 @@ const updateShownData = async function() {
         method:'GET'
     })
     const text = await response.text()
+    // This specifically still needs to be parsed
     const data = JSON.parse(text)
     let dataToDisplay = ""
     // Data is sent back as an array with all documents 
-    console.log(data)
     for (let i = 0; i < data.length; i++) {
         if (data[i].game != null) {
             dataToDisplay += data[i].game+":"+data[i].highscore+", "
         }
-    }``
+    }
     // Overwrite the displayed scoretable with the updated version after it returns
     document.getElementById('scoretable').innerHTML = dataToDisplay.replaceAll(/(<[^l][^i][^>])|([^<][^l][^i]>)/g, "")
 }
