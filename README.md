@@ -122,13 +122,26 @@ List up to five Express middleware packages you used and a short (one sentence) 
 - **Tech Achievement 3**: I tried to OAuth authentication via the GitHub strategy and decided it was not worth it, 0 bonus points.
 
 ### Design/Evaluation Achievements
-
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative:
 Writing:
 1 Provide informative, unique page titles, before reading this I just had them both to be CS4241 Assignment 2, so I changed it to be both more descriptive and to diferentiate the login form the main page. (Scoredisplay - CS4241 Assignment 2 and Login Scoredisplay - CS4241 Assignment 2)
 2 Write meaningful text alternatives for images: Quickly describe what a profile picutre in alt shows in alt text rather then just numebr the alt text pfofile picure 1 2 and so on
-3 Providing clear instructions, if somthing goes wrong with login, rather then just saying login failed try agian there are seperate error messages for the account not existing and password being wrong.
+3 Providing clear instructions, if somthing goes wrong with login, rather then just saying login failed try agian there are seperate error messages for the account not existing and password being wrong. Also clarifying that you can't leave the username blank (theorically you can set password to "" so this is only for username)
 Designing:
 4 Provide sufficient contrast between foreground and background, the default color blue in the primary buttons was too close to the white text so I changed the default background color's to a darker purple to have more contrast
 5 Ensure that interactive elements are easy to identify, the default input elements to have a blue highlight when you select them, but when I tested this thought that it was not very visible on the non-button elements because border size was too small and the blue as I said before was not the best contrast, so make it stand out more I added a css rule to turn the bckgudn color beige when one was focused. I also had to do a few changes for things like select, which did not play well with just the change.
 6 Ensure that form elements include clearly associated labels, I was just using placeholdertext for all of my instrucions so I fixed that.
+7 Provide easily identifiable feedback, in addition to the clear error messages, by returning a body that can be displayed to the user in addition to error code, using setCustomValidity there is instant feedback on if you are messing and not following instrucitons that when prompted to enter the same thing twice your answers must match. I find this very usefull for the passwords as you might have misclicked and can't see them to tell if they match.
+8 Include image and media alternatives in your design, in addition to having alt text for images, I can actualy have a description that hopefully still captures little bit of humor and individualism you can have with profile pictures even if pictures are not your thing. You can see description at top of page by the profile picture
+9 Associate a label with every form control, I already have labels for everything so just ensuring that they are the actual label element and this is fine!
+10 Include alternative text for images, Having meaninful alt text already covers this but I guess I get a point for having any alt text at all and then more if it is actually usefull.
+11 Use mark-up to convey meaning and structure, instead of just using div and input I actually have the correct html tags for thigns, the form is a form, also headers now exist. Mainly I am just not using span and instead go look though html tags, and replace it what whatever I feel would be most informative.
+12 Reflect the reading order in the code order, This is somthing that I naturally try and to with my code since it is more readable to me. Generally I do this with nesting stuff in section's  so you can see everything an the indents help you see what is is what section. This was not hard to do since hard to make sure my code is readable anyways.
+(13) Identify page language and language changes, I did not delete the lang=en part of the template so yay!
+(14) Help users avoid and correct mistakes, I can't acctually try an correct the user on thier usename password without making the reason for having it pointless but erro mesages are as convinient as possible and appear where the error happends so that is best I can do without an auto-fill for password which is probably not what was inteded by this.  
+I think this is worth 10 points. 
+
+- **Design Achievement 2**: I ...
+
+
+Total 18 Points of Achivements Attempted
