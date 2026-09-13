@@ -15,6 +15,11 @@ body {
   background-color: darkcyan;
 }
 
+/* I don't want any bulletpoints for ul even if I do like the list style to show stuff*/
+ul {
+  list-style-type: none
+}
+
 /* This is supposed to take up start of page, since this is were all user input happens*/
 /* Default sizing and look is fine but it needs to have a min-hight since data only appears after page load*/
 /* Having this prevents it from needing to recalculate page looks when hight chages after data appears*/

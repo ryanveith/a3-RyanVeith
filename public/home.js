@@ -80,7 +80,7 @@ const updateShownData = async function() {
     // Data is sent back as an array with all documents 
     for (let i = 0; i < data.length; i++) {
         if (data[i].game != null) {
-            dataToDisplay += data[i].game+":"+data[i].highscore+", "
+            dataToDisplay += "<li>"+(data[i].game+": "+data[i].highscore).replaceAll(/(<|>)/g, "")+"</li>"
         }
         //one of the elemnts sent back should contain the username so update that 
         else if (data[i].username != null) {
@@ -88,7 +88,7 @@ const updateShownData = async function() {
         }
     }
     // Overwrite the displayed scoretable with the updated version after it returns
-    document.getElementById('scoretable').innerHTML = dataToDisplay.replaceAll(/(<[^l][^i][^>])|([^<][^l][^i]>)/g, "")
+    document.getElementById('scoretable').innerHTML = dataToDisplay
     // Also update player name
     document.getElementById('welcome').innerText = `Welcome back ${username}! What would you like to do?`
 }
@@ -184,6 +184,11 @@ const getGames = (`
 
 window.onload = async function ()  {
     updateForm()
-    updateShownData()
 }
 
+// I was trying hard to get verything to just work in window.onload but updateShownData() has to fetch the data
+// And they while I got it to work in incognito when initially doing lighthouse tests
+// Did not seem consistent
+document.addEventListener("DOMContentLoaded", () => {
+    updateShownData()
+});
