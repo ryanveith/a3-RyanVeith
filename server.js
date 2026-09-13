@@ -5,7 +5,6 @@ const express = require( 'express' ),
     favicon = require( 'serve-favicon' ),
     path = require( 'path' ),
     bodyParser = require('body-parser'),
-    //cookieParser = require('cookie-parser'),
     app = express(),
     user = "" 
 
@@ -18,30 +17,12 @@ app.use( cookie({
   maxAge: 60 * 60 * 1000
 }))
 
-
-// Extra middleware added for the bonus points
-
 // Have an Icon!
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')))
+
 // Pre-parse the json in functions! Sorry express but we hae a new thing that does this!
 app.use(bodyParser.json())
 //app.use( express.json() )
-
-// Apparently both cookie parser and cookie session will try and sign it so only give them differnt keys (or only 1 a key)
-// Scratch that cookieParser just does not seemt o get along with cookie session so I guess I will only use cookie session
-//app.use(cookieParser())
- 
-
-// This is the example coade for this: but while the sendfile seems to work, it also seems to break a lot of random other stuff
-// So instead not using this and just checking cookies instead
-// Only allow authenticated users to access logged in page
-//app.use( function( req,res,next) {
-//  if( req.session.login != null )
-//    res.sendFile( __dirname + '/public/home.html' )
-//  else
-//    res.sendFile( __dirname + '/public/index.html' )
-//})
-
 
 // Mongo DB stuff
 const { MongoClient, ServerApiVersion } = require('mongodb')
@@ -63,7 +44,7 @@ async function run() {
         //collection = await client.db("datatest").collection("test")
         console.log("Pinged your deployment. You successfully connected to MongoDB!")
         
-        // route to get all docs
+        // route to get all docs for a user
         app.get("/docs", async (req, res) => {
             // check cookies before returning a clients info
             // Req.session returns an object, but the only cookie we care about is the login one
@@ -211,6 +192,10 @@ async function run() {
                         res.end( JSON.stringify('There is already an account with that username, Please choose a unique username' ) )
                     }
                 }
+            }
+            else{
+                res.writeHead( 400, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify('Username can not be blank' ) )
             }
         })
 

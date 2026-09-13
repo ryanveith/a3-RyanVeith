@@ -5,6 +5,20 @@
   background-color: blueviolet;
 }
 
+/* Make it very obvious when an elemnt is slected */
+:focus {
+  background-color:beige;
+  /* The select element does not really work well with chaning background by the options do */
+  option {
+    background-color:beige;
+  }
+
+}
+/* Radio buttons are somehow worse then select, but since they are all children of thier label this works */
+label:focus-within {
+  background-color:beige;
+}
+
 /* I really do like the blue/green colors and since I can use them I am */
 .pure-u-1-2 {
   background-color: aquamarine;

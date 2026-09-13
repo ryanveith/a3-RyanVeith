@@ -125,25 +125,25 @@ const getMenu = (`
         <li>
         <label>
             <input id = "whatToDo1" name="whatToDo" value="1" type = "radio">
-            Change Username 
+            Change your Nickname 
         </label>
         </li>
         <li>
         <label>
             <input id = "whatToDo2" name="whatToDo" value="2" type = "radio">
-            Change Password
+            Change your Password
         </label>
         </li>
         <li>
         <label>
             <input id = "whatToDo3" name="whatToDo" value="3" type = "radio">
-            Change Profile picture
+            Change your Profile picture
         </label>
         </li>
         <li>
         <label>
-            <input id = "whatToDo4" name="whatToDo" value="4" type = "radio">
-            Input and Modify scores for Games
+            <input id = "whatToDo4" name="whatToDo" value="4" type = "radio" checked>
+            Add data about Games you have played
         </label>
         </li>
     </ul>
@@ -151,14 +151,18 @@ const getMenu = (`
 `)
 
 const getUsername = (`
+     <label for="username1"> Enter a Nickname: </label>
     <input type='text' id='username1' value=''placeholder='Please enter a new username'>
+     <label for="username2"> Confirm your Nickname: </label>
     <input type='text' id='username2' value='' placeholder='Please retype your username'>
     <button class="pure-button pure-button-secondary type="button" onclick="updateForm()" >back</button>
     <button class="pure-button pure-button-primary type="button" onclick="updateUsername()" >submit</button>
 `)
 
 const getPassword = (`
+    <label for="password1"> Enter a New Password: </label>
     <input type='password' id='password1' value=''placeholder='Please enter a new password'>
+    <label for="password2"> Confirm your Password: </label>
     <input type='password' id='password2' value='' placeholder='Please retype your password'>
     <button class="pure-button pure-button-secondary type="button" onclick="updateForm()" >back</button>
     <button class="pure-button pure-button-primary type="button" onclick="updatePassword()" >submit</button>
@@ -171,12 +175,15 @@ const getProfilePicture = (`
 `)
 
 const getGames = (`
+    <label for="option"> Select Add/Modify/Delete Score: </label>
     <select id='option'>
         <option>Add Score</option>
         <option>Modify Score</option>
         <option>Delete Score</option>
     </select>
+    <label for="game"> Enter Name of Game: </label>
     <input type='text' id='game' value=''placeholder='enter what game this score is for'>
+    <label for="highscore"> Enter your Highscore: </label>
     <input type='text' id='highscore' value='' placeholder='enter your score here'>
     <button class="pure-button pure-button-secondary type="button" onclick="updateForm()" >back</button>
     <button class="pure-button pure-button-primary type="button" onclick="updateGameScore()" >submit</button>
