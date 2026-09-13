@@ -5,16 +5,23 @@
   background-color: blueviolet;
 }
 
+/* I really do like the blue/green colors and since I can use them I am */
+.pure-u-1-2 {
+  background-color: aquamarine;
+}
+
 body {
   font-size: 150%;
+  background-color: darkcyan;
 }
 
 /* This is supposed to take up start of page, since this is were all user input happens*/
 /* Default sizing and look is fine but it needs to have a min-hight since data only appears after page load*/
 /* Having this prevents it from needing to recalculate page looks when hight chages after data appears*/
 form {
-  min-height: 50vh ;
+  min-height: 45vh ;
 }
+
 
 /*body {
   font-family: 'Courier New', Courier, monospace;

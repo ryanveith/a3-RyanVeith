@@ -82,9 +82,15 @@ const updateShownData = async function() {
         if (data[i].game != null) {
             dataToDisplay += data[i].game+":"+data[i].highscore+", "
         }
+        //one of the elemnts sent back should contain the username so update that 
+        else if (data[i].username != null) {
+            username = data[i].username
+        }
     }
     // Overwrite the displayed scoretable with the updated version after it returns
     document.getElementById('scoretable').innerHTML = dataToDisplay.replaceAll(/(<[^l][^i][^>])|([^<][^l][^i]>)/g, "")
+    // Also update player name
+    document.getElementById('welcome').innerText = `Welcome back ${username}! What would you like to do?`
 }
 
 const updateForm = async function() {
@@ -115,10 +121,6 @@ const updateForm = async function() {
 }
 
 const getMenu = (`
-    <p>
-        Welcome back ${username}!
-    </p>
-    <legend>What would you like to do</legend>
     <ul>
         <li>
         <label>

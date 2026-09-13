@@ -71,16 +71,15 @@ async function run() {
             // and then its [0] since its only thing in array and [1] because we only care about the value
             const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
             if (authenticatedUser != null) {
-                //return collection
+                //return collection of just that clients info
                 collection = await client.db("datatest").collection(authenticatedUser)
-                //TODO: limit docs return to just the collection called admin
-                // Also change "datatest" above to req.session cookies and move it so it is not above because it should change on log-in/out
-                //collection = await client.db("datatest").collection("test")
                 if (collection !== null) {
                     const docs = await collection.find({}).toArray()
                     res.json( docs )
                 }
                 else {
+                    // This situation would be an error in the database call
+                    // I don't have a solution for somthing is wrong on thier end, so just return nothing
                     res.json( {} )
                 }
             }
@@ -111,16 +110,18 @@ async function run() {
                 // Do whatever option was given in submit
                 console.log(req.body)
                 if (req.body.option == "Change Username") {
-                    console.log("this operation is not currently supported")
-                    //rename collection to new username
-                    // TODO, this is not supported before mongodb 8.1  
-                    //const result = await collection.rename(req.body.newUsername)
-                    //console.log("rename error", result)
-                    
+                    // Without mongodb verion 8.1 can't really support changing collection name to do this
+                    // If it turned strict off I could call stuff from that, but that seemed to make the database be slow when I tried onces
+                    // But we can call the user whatever they want to be called
+                    const result = await collection.updateOne({
+                        "username": { $exists: true }}, {
+                        $set:{ 
+                            "username":req.body.newUsername
+                        }
+                    })
                 }
                 else if (req.body.option == "Change Password") {
                     //change password stored in collection
-                    console.log(req.body)
                     const result = await collection.updateOne({
                         "password": { $exists: true }}, {
                         $set:{ 
@@ -134,7 +135,8 @@ async function run() {
                 else if (req.body.option == "Add Score") {
                     //add game score pair to collection
                     const result = await collection.insertOne({
-                        "game": req.body.game, "highscore": req.body.highscore
+                        "game": req.body.game, 
+                        "highscore": req.body.highscore
                     })
                     // return result of this call to db
                     res.writeHead( 200, { 'Content-Type': 'application/json' })
@@ -196,6 +198,7 @@ async function run() {
                     if (passwordToCheck == null) {
                         // create password
                         const result = await collection.insertOne({
+                            "username": req.body.username,
                             "password": req.body.password
                         })
                         // log in

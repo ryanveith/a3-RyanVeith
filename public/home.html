@@ -12,26 +12,23 @@
     
     <!-- Description for SEO Audit -->
     <meta name="description" content="The login page for a simple database that lets you store highscores for games you play.">
-    
+
   </head>
   <body>
     <header>
       <button type="button" onclick="logout()"> Log Out</button>
     </header>
     <main>
-      <form class="pure-form pure-form-stacked" id="home">
-        
-      </form>
-
-
-      <div id="layout">
-        <form class="item">
+      <p id='welcome'>
+        Welcome back Player 1! What would you like to do?
+      </p>
+      <div class="pure-g" id="layout">
+        <form class="pure-u-1-2 pure-form pure-form-stacked" id="home">
           
         </form>
-
-        <section class="item">
+        <section class="pure-u-1-2">
           <h2 >Highscores</h2>
-          <ul id = 'scoretable'>
+          <ul class="pure-menu" id = 'scoretable'>
             <li>
               Submit a Score to see how how it compares to other highscores
             </li>
