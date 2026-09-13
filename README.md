@@ -109,11 +109,13 @@ Include a very brief summary of your project here. Images are encouraged, along 
 
 - **Tech Achievement 2**: Use Middleware packages
 List up to five Express middleware packages you used and a short (one sentence) summary of what each one does.
-Used `npm install serve-favicon` to install serve-favicon library for middleware displaying the default fav.icon. The default given code from last project gets rid of the error but this is a bit nicer. I thougt this would be really easy and simple to implement, but when I first tried it I got a no such file or directory error in the favicon library, I am faily sure it is because windows does not know what to do, but the error  
+1 Used `npm install serve-favicon` to install serve-favicon library for middleware displaying the default fav.icon. The default given code from last project gets rid of the error but this is a bit nicer. I thougt this would be really easy and simple to implement, but when I first tried it I got a no such file or directory error in the favicon library, I am faily sure it is because windows does not know what to do, but the error  
   errno: -4058,
   code: 'ENOENT',
   syscall: 'stat', ...
   Was annoying and I thought I might be screwed but everything was working fine it was I could not spell and flipped letters so path.join was not correct names. So favicon was not finidng the file, and did not have the most helpful error code or a default to fall back to. All in all I now have a custom favicon which is cool!
+2 Used `npm install body-parser`, this library just parses JSON for you, you can set it up do to a so for specific routes, but I just have it parsing everything as middleware. This is not super exiting becase express does have middleware that can do stuff like that so this is just switching it out.
+3 Used `npm install cookie-session`, simple creation and reading of cookies. I started using this library because of what we dscussed in class. Then I treid to use the cookie.parser library to grab the cookeis because why not? Turns out the two librarys dont play well, they will both try to encrupt same data, both do it differenlty, it did not work. After a bit of reseach to try and find a workaroudn I did the logical thing and just choose 1. This was the one that I had for longer so it survied.
 
 - **Tech Achievement 3**: I tried to OAuth authentication via the GitHub strategy and decided it was not worth it, 0 bonus points.
 

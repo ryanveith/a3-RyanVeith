@@ -1,18 +1,51 @@
 require("dotenv").config()
 // Express const
 const express = require( 'express' ),
+    cookie = require( 'cookie-session' ),
     favicon = require( 'serve-favicon' ),
     path = require( 'path' ),
+    bodyParser = require('body-parser'),
+    //cookieParser = require('cookie-parser'),
     app = express(),
     user = "" 
 
-console.log(path.join(__dirname, 'public', 'images', 'favicon.ico'))
+// Cookies middleware:
+app.use( cookie({
+  name: 'login',
+  keys: [process.env.KEY1, process.env.KEY2],
+  // Save for 1 hour
+  signed: true,
+  maxAge: 60 * 60 * 1000
+}))
+
+
+// Extra middleware added for the bonus points
+
+// Have an Icon!
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')))
+// Pre-parse the json in functions! Sorry express but we hae a new thing that does this!
+app.use(bodyParser.json())
+//app.use( express.json() )
+
+// Apparently both cookie parser and cookie session will try and sign it so only give them differnt keys (or only 1 a key)
+// Scratch that cookieParser just does not seemt o get along with cookie session so I guess I will only use cookie session
+//app.use(cookieParser())
+ 
+
+// This is the example coade for this: but while the sendfile seems to work, it also seems to break a lot of random other stuff
+// So instead not using this and just checking cookies instead
+// Only allow authenticated users to access logged in page
+//app.use( function( req,res,next) {
+//  if( req.session.login != null )
+//    res.sendFile( __dirname + '/public/home.html' )
+//  else
+//    res.sendFile( __dirname + '/public/index.html' )
+//})
 
 
 // Mongo DB stuff
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.MY_USERNAME}:${process.env.PASSWORD}@${process.env.DATABASE_URL}/?appName=CS4241-Webware`; 
+const { MongoClient, ServerApiVersion } = require('mongodb')
+const uri = `mongodb+srv://${process.env.MY_USERNAME}:${process.env.PASSWORD}@${process.env.DATABASE_URL}/?appName=CS4241-Webware` 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
@@ -20,18 +53,25 @@ const client = new MongoClient(uri, {
         strict: true,
         deprecationErrors: true,
     }
-});
+})
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        await client.connect()
         // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
+        await client.db("admin").command({ ping: 1 })
         collection = await client.db("datatest").collection("test")
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        console.log("Pinged your deployment. You successfully connected to MongoDB!")
         
         // route to get all docs
         app.get("/docs", async (req, res) => {
+            //check cookies before returning a clients info
+            console.log("Reading cookies")
+            console.log('Cookies: ', req.session);
+            
+            //TODO: limit docs return to just the collection called admin
+            // Also change "datatest" above to req.session cookies and move it so it is not above because it should change on log-in/out
+
             if (collection !== null) {
                 const docs = await collection.find({}).toArray()
                 res.json( docs )
@@ -43,6 +83,7 @@ async function run() {
 
         //normal routes
         // I mean really both are already being served as static files, but here is some code anyways
+        // I am not evern sure theya are running since console.logs in them never go off
         app.get( '/', ( req, res ) => {
             res.writeHead( 200, { 'Content-Type': 'application/json' })
             res.end( JSON.stringify( 'Hello World!' ) )
@@ -100,23 +141,37 @@ async function run() {
         })
 
         app.post( '/login', (req, res) => {
-            console.log("log in attempet")
+            console.log("log in attempt")
             console.log(req.body)
+            if (req.body.username === req.body.username) {
+                req.session.login = req.body.username
+                res.writeHead( 200, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( "Login Sucessfull" ) )
+            }
+            else {
+                res.writeHead( 401, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( "Login Failed" ) )
+            }
+            
+        })
+
+        app.post( '/logout', (req, res) => {
+            req.session.login = null
             res.writeHead( 200, { 'Content-Type': 'application/json' })
-            res.end( JSON.stringify( "Hello world" ) )
+            res.end( JSON.stringify( "Logout Sucessfull" ) )
         })
 
     } finally {
         // Ensures that the client will close when you finish/error
         // But this happens when you stop running the server anyways so just keep it open rather then reopen it for every call
-        //await client.close();
+        //await client.close()
     }
 }
 
 app.use( express.static('public') )
 
-app.use( express.json() )
 
-run().catch(console.dir);
+
+run().catch(console.dir)
 
 app.listen( process.env.PORT || 3000 )

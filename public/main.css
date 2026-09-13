@@ -6,7 +6,7 @@
 }
 
 body {
-  font-size: 225%;
+  font-size: 150%;
 }
 
 /* This is supposed to take up start of page, since this is were all user input happens*/
@@ -28,6 +28,7 @@ li {
   margin: 2%;
 }
 
+// This probably needs to come back, since the increaced vh for fast page loading and increaced text size bump results off bottom
 #layout {
   background-color: blueviolet;
   display: flex;

@@ -5,6 +5,11 @@ let username = "Player 1"
 const logout = async function( event ) {
     //event.preventDefault()
     console.log("logging out")
+    const response = await fetch( '/submit', {
+        method:'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( "" ) 
+    })
     window.location.href = '/'
     //Actually log out from server maybe?
     //not using auth0 right now
@@ -77,7 +82,6 @@ const updateShownData = async function() {
 
 const updateForm = async function() {
     const selection = document.querySelector('input[name="whatToDo"]:checked')
-    console.log(selection)
     if (selection != null) {
         if (selection.value === "1") {
             document.getElementById('home').innerHTML = getUsername     
