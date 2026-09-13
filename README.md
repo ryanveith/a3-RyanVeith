@@ -109,7 +109,11 @@ Include a very brief summary of your project here. Images are encouraged, along 
 
 - **Tech Achievement 2**: Use Middleware packages
 List up to five Express middleware packages you used and a short (one sentence) summary of what each one does.
-None currenly used, could add some
+Used `npm install serve-favicon` to install serve-favicon library for middleware displaying the default fav.icon. The default given code from last project gets rid of the error but this is a bit nicer. I thougt this would be really easy and simple to implement, but when I first tried it I got a no such file or directory error in the favicon library, I am faily sure it is because windows does not know what to do, but the error  
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat', ...
+  Was annoying and I thought I might be screwed but everything was working fine it was I could not spell and flipped letters so path.join was not correct names. So favicon was not finidng the file, and did not have the most helpful error code or a default to fall back to. All in all I now have a custom favicon which is cool!
 
 - **Tech Achievement 3**: I tried to OAuth authentication via the GitHub strategy and decided it was not worth it, 0 bonus points.
 

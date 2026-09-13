@@ -1,8 +1,14 @@
 require("dotenv").config()
 // Express const
 const express = require( 'express' ),
+    favicon = require( 'serve-favicon' ),
+    path = require( 'path' ),
     app = express(),
     user = "" 
+
+console.log(path.join(__dirname, 'public', 'images', 'favicon.ico'))
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')))
+
 
 // Mongo DB stuff
 const { MongoClient, ServerApiVersion } = require('mongodb');

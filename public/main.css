@@ -1,8 +1,12 @@
+
 /* The pure-button is being overridden by Blueviolet which is #8A2BE2 to make the text higher contrast*/
-/* This is fine for google lighthouse and passes AA, but is not AAA compliant for small text, so I to be safe I made font size-larger*/
+/* This is fine for google lighthouse and passes AA, but is not AAA compliant for small text, so I to be safe I made font size-larger everywhere*/
 .pure-button.pure-button-primary {
   background-color: blueviolet;
-  font-size: 125%;
+}
+
+body {
+  font-size: 225%;
 }
 
 /* This is supposed to take up start of page, since this is were all user input happens*/

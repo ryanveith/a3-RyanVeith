@@ -130,7 +130,7 @@ const getMenu = (`
         <li>
         <label>
             <input id = "whatToDo4" name="whatToDo" value="4" type = "radio">
-            Modify scroes for games
+            Input and Modify scores for Games
         </label>
         </li>
     </ul>
