@@ -143,7 +143,11 @@ I think this is worth 10 points.
 
 - **Design Achievement 2**: I used  the CRAP principles in the Non-Designer's Design Book reading.
 You could also Call it CARP principles, though I don't actually have a fish profile picture option
+The first principle is contrast there was really one 1 main thing that it came up in. Buttons, for navigation to be nice there has to both be some form of a "submit" button to progress with chaning a specific kind of data an also a back to get to the menu for what all you can change. Lucky the visual library I am using has primary buttons and normal and they look very different so it was easy to implement this. As for everything else stuff is enough of a one of the kind or all as close to excaly the same as I can get user input without making it inconveinet by making the user type a thing from a dropdown.
+The second principle is repetition . Here I tried to provide unity by having options be repeating. You have inputs being repeating in the login and home page. I even tried to do this with the radio buttons of having all of them look like the same thing repeated to help make everything look unified and purposefull
+The third principle is Alignment this is the prinicple I struggled with the most. I feel like I managed to do this the some with the color scheme. The other thing I tried to do of this is seperate things into sections, other then the header on the home page both login and home have a tile and I try to make everything branch out from there so it is at least in some form able to be linked back to that title.
+Finally there is proximity, here I did a lot as basially everything is grouped together, input fields, data about your games. Part of making everything connected back to the header means they are naturaly grouped underneath it. The home page even has a different background color to try and group the two different sides of the page user input to change data, and then seeing current data.
+I think this explination of CARP principles used on the website is worth 5 points.
 
-
-Total 18 Points of Achivements Attempted
-Also fun profile pictures!
+Total 23 Points of Achivements Attempted.
+I know 20 is the max but these are the ones I tried. Also there are fun profile pictures!

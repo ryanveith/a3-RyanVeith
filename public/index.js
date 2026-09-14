@@ -18,14 +18,13 @@ const login = async function() {
     const errorMessage = document.querySelector( '#error' )
     console.log("status", response.status)
     if (response.status == 200) {
-        // As far as I can tell hidden does not need a value it just needs to exist as an attribute
-        errorMessage.setAttribute("hidden", "")
-        errorMessage.innerText = ""
-        console.log("here")
+        // I was adding and removing hidden but I think it makes more sense to add remove alert and the text for the error
+        errorMessage.setAttribute("role", "")
+        errorMessage.innerText = " "
         window.location.href = '/home.html'
     }
     else {  
-        errorMessage.removeAttribute("hidden")
+        errorMessage.setAttribute("role", "alert")
         errorMessage.innerText = text
     }
 }
