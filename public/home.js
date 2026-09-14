@@ -242,11 +242,6 @@ const getGames = (`
 
 window.onload = async function ()  {
     updateForm()
+    updateShownData()
 }
 
-// I was trying hard to get verything to just work in window.onload but updateShownData() has to fetch the data
-// And they while I got it to work in incognito when initially doing lighthouse tests
-// Did not seem consistent
-document.addEventListener("DOMContentLoaded", () => {
-    updateShownData()
-});
