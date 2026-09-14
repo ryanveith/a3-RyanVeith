@@ -45,7 +45,15 @@ const updatePassword = async function() {
 }
 
 const updateProfilePicture = async function() {
-    //select it from a list, not sure how right now though
+    //update picture from selected
+    const newpfp = document.querySelector('input[name="pfp"]:checked')
+    //POST req to change this  in server
+    const response = await fetch( '/submit', {
+        method:'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( {option:'Change Profile Picture', pfp:newpfp.value} ) 
+    })
+    console.log("made it here")
 }
 
 const updateGameScore = async function() {
@@ -85,6 +93,11 @@ const updateShownData = async function() {
         //one of the elemnts sent back should contain the username so update that 
         else if (data[i].username != null) {
             username = data[i].username
+            //this piece of data might also have a specific profile picture if so use it instead of default
+            if (data[i].pfp != null) {
+                const pfpImage = document.getElementById("profile picture")
+                pfpImage.src = data[i].pfp
+            }
         }
     }
     // Overwrite the displayed scoretable with the updated version after it returns
@@ -151,9 +164,9 @@ const getMenu = (`
 `)
 
 const getUsername = (`
-     <label for="username1"> Enter a Nickname: </label>
+    <label for="username1"> Enter a Nickname: </label>
     <input type='text' id='username1' value=''placeholder='Please enter a new username'>
-     <label for="username2"> Confirm your Nickname: </label>
+    <label for="username2"> Confirm your Nickname: </label>
     <input type='text' id='username2' value='' placeholder='Please retype your username'>
     <button class="pure-button pure-button-secondary type="button" onclick="updateForm()" >back</button>
     <button class="pure-button pure-button-primary type="button" onclick="updateUsername()" >submit</button>
@@ -169,7 +182,45 @@ const getPassword = (`
 `)
 
 const getProfilePicture = (`
-    <p>This is not available with free database size restrictions</p>
+    <h2>Select a New Profile Picture</h2>
+    <section class="pure-g">
+        <label for="pfp1" class="pure-u-1-3">
+            <input id = "pfp1" name = "pfp" value="images/Black Elephant.png" type=radio>
+            <image src="images/Black Elephant.png" alt="Picture of a Black Elephant"> Black Elephant </image>
+        </label>
+        <label for="pfp2" class="pure-u-1-3">
+            <input id = "pfp2" name = "pfp" value="images/Brown Dog.png" type=radio >
+            <image src="images/Brown Dog.png" alt="Picture of a Brown Dog"> Brown Dog </image>
+        </label>
+        <label for="pfp3" class="pure-u-1-3">
+            <input id = "pfp3" name = "pfp" value="images/Green Frog.png" type=radio >
+            <image src="images/Green Frog.png" alt="Picture of a Green Frog"> Green Frog </image>
+        </label>
+        <label for="pfp4" class="pure-u-1-3">
+            <input id = "pfp4" name = "pfp" value="images/Grey Panda.png" type=radio>
+            <image src="images/Grey Panda.png" alt="Picture of a Grey Panda"> Grey Panda </image>
+        </label>
+        <label for="pfp5" class="pure-u-1-3">
+            <input id = "pfp5" name = "pfp" value="images/Orange Monkey.png" type=radio >
+            <image src="images/Orange Monkey.png" alt="Picture of a Orange Monkey"> Orange Monkey </image>
+        </label>
+        <label for="pfp6" class="pure-u-1-3">
+            <input id = "pfp6" name = "pfp" value="images/Pink Pig.png" type=radio >
+            <image src="images/Pink Pig.png" alt="Picture of a Pink Pig"> Pink Pig </image>
+        </label>
+        <label for="pfp7" class="pure-u-1-3">
+            <input id = "pfp7" name = "pfp" value="images/Purple Bunny.png" type=radio>
+            <image src="images/Purple Bunny.png" alt="Picture of a Purple Bunny"> Purple Bunny </image>
+        </label>
+        <label for="pfp8" class="pure-u-1-3">
+            <input id = "pfp8" name = "pfp" value="images/Red Fox.png" type=radio >
+            <image src="images/Red Fox.png" alt="Picture of a Red Fox"> Red Fox </image>
+        </label>
+        <label for="pfp9" class="pure-u-1-3">
+            <input id = "pfp9" name = "pfp" value="images/White Cow.png" type=radio >
+            <image src="images/White Cow.png" alt="Picture of a White Cow"> White Cow </image>
+        </label>
+    </section>
     <button class="pure-button pure-button-secondary type="button" onclick="updateForm()" >back</button>
     <button class="pure-button pure-button-primary type="button" onclick="updateProfilePicture()" >submit</button>
 `)

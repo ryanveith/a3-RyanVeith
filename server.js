@@ -83,6 +83,8 @@ async function run() {
         } )
 
         app.post( '/submit', async (req, res) => {
+            console.log("hello world")
+            console.log(req.body)
             // same thing as above for getting the user
             const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
             if (authenticatedUser != null) {
@@ -112,6 +114,15 @@ async function run() {
                 }
                 else if (req.body.option == "Change Profile Picture") {
                     //change picture stored in collection
+                    console.log(req.body.pfp)
+                    //You do not have to have a pfp, but if so it will be stored in same doc as username and password
+                    const result = await collection.updateOne({
+                        "username": { $exists: true }}, {
+                        $set:{ 
+                            "pfp":req.body.pfp
+                        }
+                    })
+
                 }
                 else if (req.body.option == "Add Score") {
                     //add game score pair to collection

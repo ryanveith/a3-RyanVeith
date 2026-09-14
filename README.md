@@ -132,7 +132,7 @@ Designing:
 5 Ensure that interactive elements are easy to identify, the default input elements to have a blue highlight when you select them, but when I tested this thought that it was not very visible on the non-button elements because border size was too small and the blue as I said before was not the best contrast, so make it stand out more I added a css rule to turn the bckgudn color beige when one was focused. I also had to do a few changes for things like select, which did not play well with just the change.
 6 Ensure that form elements include clearly associated labels, I was just using placeholdertext for all of my instrucions so I fixed that.
 7 Provide easily identifiable feedback, in addition to the clear error messages, by returning a body that can be displayed to the user in addition to error code, using setCustomValidity there is instant feedback on if you are messing and not following instrucitons that when prompted to enter the same thing twice your answers must match. I find this very usefull for the passwords as you might have misclicked and can't see them to tell if they match.
-8 Include image and media alternatives in your design, in addition to having alt text for images, I can actualy have a description that hopefully still captures little bit of humor and individualism you can have with profile pictures even if pictures are not your thing. You can see description at top of page by the profile picture
+8 Include image and media alternatives in your design, in addition to having alt text for images, I can actualy have a quick description for each image that is animal and background color rather then just having it be a choose a picture.
 9 Associate a label with every form control, I already have labels for everything so just ensuring that they are the actual label element and this is fine!
 10 Include alternative text for images, Having meaninful alt text already covers this but I guess I get a point for having any alt text at all and then more if it is actually usefull.
 11 Use mark-up to convey meaning and structure, instead of just using div and input I actually have the correct html tags for thigns, the form is a form, also headers now exist. Mainly I am just not using span and instead go look though html tags, and replace it what whatever I feel would be most informative.
@@ -141,7 +141,9 @@ Designing:
 (14) Help users avoid and correct mistakes, I can't acctually try an correct the user on thier usename password without making the reason for having it pointless but erro mesages are as convinient as possible and appear where the error happends so that is best I can do without an auto-fill for password which is probably not what was inteded by this.  
 I think this is worth 10 points. 
 
-- **Design Achievement 2**: I ...
+- **Design Achievement 2**: I used  the CRAP principles in the Non-Designer's Design Book reading.
+You could also Call it CARP principles, though I don't actually have a fish profile picture option
 
 
 Total 18 Points of Achivements Attempted
+Also fun profile pictures!

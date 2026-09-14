@@ -37,10 +37,17 @@ ul {
 /* This is supposed to take up start of page, since this is were all user input happens*/
 /* Default sizing and look is fine but it needs to have a min-hight since data only appears after page load*/
 /* Having this prevents it from needing to recalculate page looks when hight chages after data appears*/
+/* I also had to add the max-width since it looked good in testng, and then I got rid of inspect and the ratio was off, oops */
 form {
   min-height: 45vh ;
+  max-width: 70vw
 }
 
+/* after adding a profile picture it was too close to logout so  this makes the header feel more correct */
+header {
+  display: flex;
+  justify-content: space-between;
+}
 
 /*body {
   font-family: 'Courier New', Courier, monospace;
