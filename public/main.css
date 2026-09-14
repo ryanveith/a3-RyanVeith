@@ -57,7 +57,8 @@ header {
 /* I really like dynamically scaling them but lighthouse complains about how they are too low res, so here is the solution */
 /* I dont like or see the point in scaling up the image up since I don't feel like making the website load more data just to show the same 50x50 image that has been scaled up and is now blurry is useful*/
 /* well, at least lighthouse is happy */
-image {
-  width:50px;
-  height:50px;
+img {
+  max-width:50px;
+  max-height:50px;
+  object-fit:cover;
 }

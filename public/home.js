@@ -185,40 +185,40 @@ const getProfilePicture = (`
     <h2>Select a New Profile Picture</h2>
     <section class="pure-g">
         <label for="pfp1" class="pure-u-1-3">
-            <input id = "pfp1" name = "pfp" value="images/Black Elephant.png" type=radio>
-            <image src="images/Black Elephant.png" alt="Picture of a Black Elephant"> Black Elephant </image>
+            <input id = "pfp1" name = "pfp" value="images/Black Elephant.png" width="50" height="50" type=radio>
+            <img src="images/Black Elephant.png" alt="Picture of a Black Elephant"> Black Elephant </img>
         </label>
         <label for="pfp2" class="pure-u-1-3">
-            <input id = "pfp2" name = "pfp" value="images/Brown Dog.png" type=radio >
-            <image src="images/Brown Dog.png" alt="Picture of a Brown Dog"> Brown Dog </image>
+            <input id = "pfp2" name = "pfp" value="images/Brown Dog.png" width="50" height="50" type=radio >
+            <img src="images/Brown Dog.png" alt="Picture of a Brown Dog"> Brown Dog </img>
         </label>
         <label for="pfp3" class="pure-u-1-3">
-            <input id = "pfp3" name = "pfp" value="images/Green Frog.png" type=radio >
-            <image src="images/Green Frog.png" alt="Picture of a Green Frog"> Green Frog </image>
+            <input id = "pfp3" name = "pfp" value="images/Green Frog.png" width="50" height="50" type=radio >
+            <img src="images/Green Frog.png" alt="Picture of a Green Frog"> Green Frog </img>
         </label>
         <label for="pfp4" class="pure-u-1-3">
-            <input id = "pfp4" name = "pfp" value="images/Grey Panda.png" type=radio>
-            <image src="images/Grey Panda.png" alt="Picture of a Grey Panda"> Grey Panda </image>
+            <input id = "pfp4" name = "pfp" value="images/Grey Panda.png" width="50" height="50" type=radio>
+            <img src="images/Grey Panda.png" alt="Picture of a Grey Panda"> Grey Panda </img>
         </label>
         <label for="pfp5" class="pure-u-1-3">
-            <input id = "pfp5" name = "pfp" value="images/Orange Monkey.png" type=radio >
-            <image src="images/Orange Monkey.png" alt="Picture of a Orange Monkey"> Orange Monkey </image>
+            <input id = "pfp5" name = "pfp" value="images/Orange Monkey.png" width="50" height="50" type=radio >
+            <img src="images/Orange Monkey.png" alt="Picture of a Orange Monkey"> Orange Monkey </img>
         </label>
         <label for="pfp6" class="pure-u-1-3">
-            <input id = "pfp6" name = "pfp" value="images/Pink Pig.png" type=radio >
-            <image src="images/Pink Pig.png" alt="Picture of a Pink Pig"> Pink Pig </image>
+            <input id = "pfp6" name = "pfp" value="images/Pink Pig.png" width="50" height="50" type=radio >
+            <img src="images/Pink Pig.png" alt="Picture of a Pink Pig"> Pink Pig </img>
         </label>
         <label for="pfp7" class="pure-u-1-3">
-            <input id = "pfp7" name = "pfp" value="images/Purple Bunny.png" type=radio>
-            <image src="images/Purple Bunny.png" alt="Picture of a Purple Bunny"> Purple Bunny </image>
+            <input id = "pfp7" name = "pfp" value="images/Purple Bunny.png" width="50" height="50" type=radio>
+            <img src="images/Purple Bunny.png" alt="Picture of a Purple Bunny"> Purple Bunny </img>
         </label>
         <label for="pfp8" class="pure-u-1-3">
-            <input id = "pfp8" name = "pfp" value="images/Red Fox.png" type=radio >
-            <image src="images/Red Fox.png" alt="Picture of a Red Fox"> Red Fox </image>
+            <input id = "pfp8" name = "pfp" value="images/Red Fox.png" width="50" height="50" type=radio >
+            <img src="images/Red Fox.png" alt="Picture of a Red Fox"> Red Fox </img>
         </label>
         <label for="pfp9" class="pure-u-1-3">
-            <input id = "pfp9" name = "pfp" value="images/White Cow.png" type=radio >
-            <image src="images/White Cow.png" alt="Picture of a White Cow"> White Cow </image>
+            <input id = "pfp9" name = "pfp" value="images/White Cow.png" width="50" height="50" type=radio >
+            <img src="images/White Cow.png" alt="Picture of a White Cow"> White Cow </img>
         </label>
     </section>
     <button class="pure-button pure-button-secondary type="button" onclick="updateForm()" >back</button>
