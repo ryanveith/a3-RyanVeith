@@ -198,7 +198,7 @@ async function run() {
         res.end( JSON.stringify( "Logout Sucessfull" ) )
     })
 }
-
+run()
 
 //normal routes
 // I mean really both are already being served as static files, but here is some code anyways
