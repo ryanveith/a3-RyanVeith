@@ -141,13 +141,7 @@ app.post( '/submit', async (req, res) => {
 })
 
 app.post( '/login', async (req, res) => {
-    try {
-        await client.connect()
-    }
-    catch (error) {
-        res.writeHead( 200, { 'Content-Type': 'application/json' })
-        res.end( JSON.stringify(error) )
-    }
+    await client.connect()
     // same as above for getting user
     //const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
     if (req.body.username != "") {
