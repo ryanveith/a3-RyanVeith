@@ -39,7 +39,6 @@ const client = new MongoClient(uri, {
 
 async function run() {
     await client.connect()
-
     // route to get all docs for a user
     app.get("/docs", async (req, res) => {
         
@@ -197,23 +196,10 @@ async function run() {
         res.writeHead( 200, { 'Content-Type': 'application/json' })
         res.end( JSON.stringify( "Logout Sucessfull" ) )
     })
-}
-run()
 
-//normal routes
-// I mean really both are already being served as static files, but here is some code anyways
-// I am not evern sure theya are running since console.logs in them never go off
-// I think app.use static is overwriting this
-/*
-app.get( '/', ( req, res ) => {
-    res.writeHead( 200, { 'Content-Type': 'application/json' })
-    res.end( JSON.stringify( 'Hello World!' ) )
-} )
-app.get( '/home.html', async ( req, res ) => {
-    res.writeHead( 200, { 'Content-Type': 'application/json' })
-    res.end( JSON.stringify( docs ) )
-} )
-*/
+}
+
+run()
 
 app.use( express.static('public') )
 
