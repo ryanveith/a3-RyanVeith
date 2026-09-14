@@ -41,10 +41,11 @@ ul {
 /* I added some padding to fix this and it looks better now */
 form {  
   min-height: 45vh;
+}
+#login-form {
   max-width: 70vw;
   padding-top: 10vh;
   padding-left: 15vw;
-  
 }
 
 /* after adding a profile picture it was too close to logout so  this makes the header feel more correct */

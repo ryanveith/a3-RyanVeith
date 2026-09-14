@@ -14,6 +14,7 @@ app.use( cookie({
   keys: [process.env.KEY1, process.env.KEY2],
   // Save for 1 hour
   signed: true,
+  httpOnly: false,
   maxAge: 60 * 60 * 1000
 }))
 
@@ -35,198 +36,180 @@ const client = new MongoClient(uri, {
         deprecationErrors: true,
     }
 })
-async function run() {
-    try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect()
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 })
-        //collection = await client.db("datatest").collection("test")
-        console.log("Pinged your deployment. You successfully connected to MongoDB!")
-        
-        // route to get all docs for a user
-        app.get("/docs", async (req, res) => {
-            // check cookies before returning a clients info
-            // Req.session returns an object, but the only cookie we care about is the login one
-            // So turn it into an array with Object.entries filter for just that one
-            // and then its [0] since its only thing in array and [1] because we only care about the value
-            const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
-            if (authenticatedUser != null) {
-                //return collection of just that clients info
-                collection = await client.db("datatest").collection(authenticatedUser)
-                if (collection !== null) {
-                    const docs = await collection.find({}).toArray()
-                    res.json( docs )
+
+// route to get all docs for a user
+app.get("/docs", async (req, res) => {
+    await client.connect()
+    // check cookies before returning a clients info
+    // Req.session returns an object, but the only cookie we care about is the login one
+    // So turn it into an array with Object.entries filter for just that one
+    // and then its [0] since its only thing in array and [1] because we only care about the value
+    const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
+    if (authenticatedUser != null) {
+        //return collection of just that clients info
+        collection = await client.db("datatest").collection(authenticatedUser)
+        if (collection !== null) {
+            const docs = await collection.find({}).toArray()
+            res.json( docs )
+        }
+        else {
+            // This situation would be an error in the database call
+            // I don't have a solution for somthing is wrong on thier end, so just return nothing
+            res.json( {} )
+        }
+    }
+    else {
+        res.json(JSON.stringify(["Your login seems to have timed out please log in"]) )
+    }
+})
+
+app.post( '/submit', async (req, res) => {
+    await client.connect()
+    // same thing as above for getting the user
+    const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
+    if (authenticatedUser != null) {
+        // Mess with just your data
+        collection = await client.db("datatest").collection(authenticatedUser)
+        // Do whatever option was given in submit
+        if (req.body.option == "Change Username") {
+            // Without mongodb verion 8.1 can't really support changing collection name to do this
+            // If it turned strict off I could call stuff from that, but that seemed to make the database be slow when I tried onces
+            // But we can call the user whatever they want to be called
+            const result = await collection.updateOne({
+                "username": { $exists: true }}, {
+                $set:{ 
+                    "username":req.body.newUsername
                 }
-                else {
-                    // This situation would be an error in the database call
-                    // I don't have a solution for somthing is wrong on thier end, so just return nothing
-                    res.json( {} )
+            })
+        }
+        else if (req.body.option == "Change Password") {
+            //change password stored in collection
+            const result = await collection.updateOne({
+                "password": { $exists: true }}, {
+                $set:{ 
+                    "password":req.body.newPassword
                 }
+            })
+        }
+        else if (req.body.option == "Change Profile Picture") {
+            //change picture stored in collection
+            //You do not have to have a pfp, but if so it will be stored in same doc as username and password
+            const result = await collection.updateOne({
+                "username": { $exists: true }}, {
+                $set:{ 
+                    "pfp":req.body.pfp
+                }
+            })
+
+        }
+        else if (req.body.option == "Add Score") {
+            //add game score pair to collection
+            const result = await collection.insertOne({
+                "game": req.body.game, 
+                "highscore": req.body.highscore
+            })
+            // return result of this call to db
+            res.writeHead( 200, { 'Content-Type': 'application/json' })
+            res.end( JSON.stringify( result ) )
+        }
+        else if (req.body.option == "Modify Score") {
+            //modify score for game
+            const result = await collection.updateOne({
+                "game":req.body.game}, {
+                $set:{ 
+                    "highscore":req.body.highscore
+                }
+            })
+            // return result of this call to db
+            res.writeHead( 200, { 'Content-Type': 'application/json' })
+            res.end( JSON.stringify( result ) )
+        }
+        else if (req.body.option == "Delete Score") {
+            //remove game and score from collection
+            const result = await collection.deleteOne({ 
+                "game":req.body.game
+            })
+            // return result of this call to db
+            res.writeHead( 200, { 'Content-Type': 'application/json' })
+            res.end( JSON.stringify( result ) )    
+        }
+    }
+    else {
+        res.writeHead( 403, { 'Content-Type': 'application/json' })
+        res.end( JSON.stringify( "Your Login Has Timed Out Please Log In" ) )
+    }
+})
+
+app.post( '/login', async (req, res) => {
+    await client.connect()
+    // same as above for getting user
+    //const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
+    if (req.body.username != "") {
+        //return collection
+        collection = await client.db("datatest").collection(req.body.username)
+        const passwordToCheck = await collection.findOne({"password": { $exists: true }} )
+        if (req.body.mode === 'Login') {
+            if (passwordToCheck == null) {
+                res.writeHead( 401, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( "That Account Does Not Exist, Please Check Your Username" ) )
+            }
+            //Check password
+            else if (req.body.password == passwordToCheck.password ) {
+                req.session.login = req.body.username
+                res.writeHead( 200, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( "Login Sucessfull" ) )
             }
             else {
-                res.json(JSON.stringify(["Your login seems to have timed out please log in"]) )
+                res.writeHead( 401, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( "Login Failed, Please Check Your Password" ) )
             }
-            
-        })
-
-        //normal routes
-        // I mean really both are already being served as static files, but here is some code anyways
-        // I am not evern sure theya are running since console.logs in them never go off
-        app.get( '/', ( req, res ) => {
-            res.writeHead( 200, { 'Content-Type': 'application/json' })
-            res.end( JSON.stringify( 'Hello World!' ) )
-        } )
-        app.get( '/home.html', async ( req, res ) => {
-            res.writeHead( 200, { 'Content-Type': 'application/json' })
-            res.end( JSON.stringify( docs ) )
-        } )
-
-        app.post( '/submit', async (req, res) => {
-            console.log("hello world")
-            console.log(req.body)
-            // same thing as above for getting the user
-            const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
-            if (authenticatedUser != null) {
-                // Mess with just your data
-                collection = await client.db("datatest").collection(authenticatedUser)
-                // Do whatever option was given in submit
-                console.log(req.body)
-                if (req.body.option == "Change Username") {
-                    // Without mongodb verion 8.1 can't really support changing collection name to do this
-                    // If it turned strict off I could call stuff from that, but that seemed to make the database be slow when I tried onces
-                    // But we can call the user whatever they want to be called
-                    const result = await collection.updateOne({
-                        "username": { $exists: true }}, {
-                        $set:{ 
-                            "username":req.body.newUsername
-                        }
-                    })
-                }
-                else if (req.body.option == "Change Password") {
-                    //change password stored in collection
-                    const result = await collection.updateOne({
-                        "password": { $exists: true }}, {
-                        $set:{ 
-                            "password":req.body.newPassword
-                        }
-                    })
-                }
-                else if (req.body.option == "Change Profile Picture") {
-                    //change picture stored in collection
-                    console.log(req.body.pfp)
-                    //You do not have to have a pfp, but if so it will be stored in same doc as username and password
-                    const result = await collection.updateOne({
-                        "username": { $exists: true }}, {
-                        $set:{ 
-                            "pfp":req.body.pfp
-                        }
-                    })
-
-                }
-                else if (req.body.option == "Add Score") {
-                    //add game score pair to collection
-                    const result = await collection.insertOne({
-                        "game": req.body.game, 
-                        "highscore": req.body.highscore
-                    })
-                    // return result of this call to db
-                    res.writeHead( 200, { 'Content-Type': 'application/json' })
-                    res.end( JSON.stringify( result ) )
-                }
-                else if (req.body.option == "Modify Score") {
-                    //modify score for game
-                    const result = await collection.updateOne({
-                        "game":req.body.game}, {
-                        $set:{ 
-                            "highscore":req.body.highscore
-                        }
-                    })
-                    // return result of this call to db
-                    res.writeHead( 200, { 'Content-Type': 'application/json' })
-                    res.end( JSON.stringify( result ) )
-                }
-                else if (req.body.option == "Delete Score") {
-                    //remove game and score from collection
-                    const result = await collection.deleteOne({ 
-                        "game":req.body.game
-                    })
-                    // return result of this call to db
-                    res.writeHead( 200, { 'Content-Type': 'application/json' })
-                    res.end( JSON.stringify( result ) )    
-                }
+        }
+        else {
+            // check that there is not existing account with this username
+            if (passwordToCheck == null) {
+                // create password
+                const result = await collection.insertOne({
+                    "username": req.body.username,
+                    "password": req.body.password
+                })
+                // log in
+                req.session.login = req.body.username
+                res.writeHead( 200, { 'Content-Type': 'application/json' })
+                res.end( JSON.stringify( 'Login Sucessfull' ) )
             }
             else {
                 res.writeHead( 403, { 'Content-Type': 'application/json' })
-                res.end( JSON.stringify( "Your Login Has Timed Out Please Log In" ) )
+                res.end( JSON.stringify('There is already an account with that username, Please choose a unique username' ) )
             }
-        })
-
-        app.post( '/login', async (req, res) => {
-            // same as above for getting user
-            //const authenticatedUser = Object.entries(req.session).filter(([cookie, value]) => cookie == `login`)[0][1]
-            if (req.body.username != "") {
-                //return collection
-                collection = await client.db("datatest").collection(req.body.username)
-                const passwordToCheck = await collection.findOne({"password": { $exists: true }} )
-                if (req.body.mode === 'Login') {
-                    if (passwordToCheck == null) {
-                        res.writeHead( 401, { 'Content-Type': 'application/json' })
-                        res.end( JSON.stringify( "That Account Does Not Exist, Please Check Your Username" ) )
-                    }
-                    //Check password
-                    else if (req.body.password == passwordToCheck.password ) {
-                        req.session.login = req.body.username
-                        res.writeHead( 200, { 'Content-Type': 'application/json' })
-                        res.end( JSON.stringify( "Login Sucessfull" ) )
-                    }
-                    else {
-                        res.writeHead( 401, { 'Content-Type': 'application/json' })
-                        res.end( JSON.stringify( "Login Failed, Please Check Your Password" ) )
-                    }
-                }
-                else {
-                    // check that there is not existing account with this username
-                    if (passwordToCheck == null) {
-                        // create password
-                        const result = await collection.insertOne({
-                            "username": req.body.username,
-                            "password": req.body.password
-                        })
-                        // log in
-                        req.session.login = req.body.username
-                        res.writeHead( 200, { 'Content-Type': 'application/json' })
-                        res.end( JSON.stringify( 'Login Sucessfull' ) )
-                    }
-                    else {
-                        res.writeHead( 403, { 'Content-Type': 'application/json' })
-                        res.end( JSON.stringify('There is already an account with that username, Please choose a unique username' ) )
-                    }
-                }
-            }
-            else{
-                res.writeHead( 400, { 'Content-Type': 'application/json' })
-                res.end( JSON.stringify('Username can not be blank' ) )
-            }
-        })
-
-        app.post( '/logout', (req, res) => {
-            req.session.login = null
-            res.writeHead( 200, { 'Content-Type': 'application/json' })
-            res.end( JSON.stringify( "Logout Sucessfull" ) )
-        })
-
-    } finally {
-        // Ensures that the client will close when you finish/error
-        // But this happens when you stop running the server anyways so just keep it open rather then reopen it for every call
-        //await client.close()
+        }
     }
-}
+    else{
+        res.writeHead( 400, { 'Content-Type': 'application/json' })
+        res.end( JSON.stringify('Username can not be blank' ) )
+    }
+})
+
+app.post( '/logout', (req, res) => {
+    req.session.login = null
+    res.writeHead( 200, { 'Content-Type': 'application/json' })
+    res.end( JSON.stringify( "Logout Sucessfull" ) )
+})
+
+//normal routes
+// I mean really both are already being served as static files, but here is some code anyways
+// I am not evern sure theya are running since console.logs in them never go off
+// I think app.use static is overwriting this
+/*
+app.get( '/', ( req, res ) => {
+    res.writeHead( 200, { 'Content-Type': 'application/json' })
+    res.end( JSON.stringify( 'Hello World!' ) )
+} )
+app.get( '/home.html', async ( req, res ) => {
+    res.writeHead( 200, { 'Content-Type': 'application/json' })
+    res.end( JSON.stringify( docs ) )
+} )
+*/
 
 app.use( express.static('public') )
-
-
-
-run().catch(console.dir)
 
 app.listen( process.env.PORT || 3000 )

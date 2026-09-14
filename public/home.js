@@ -2,10 +2,10 @@ let username = "Player 1"
 
 // Logout and return to default landing page for not logged in users
 const logout = async function( event ) {
-    const response = await fetch( '/submit', {
+    const response = await fetch( '/logout', {
         method:'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( "" ) 
+        body: JSON.stringify( {} ) 
     })
     window.location.href = '/'
 }
