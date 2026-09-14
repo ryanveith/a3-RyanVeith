@@ -1,6 +1,5 @@
 const login = async function() {
-    console.log("ran submit")
-
+    console.log("running login")
     const mode = document.querySelector( '#option' ),
         username = document.querySelector( '#username' ),
         password = document.querySelector( '#password' ),
@@ -14,7 +13,9 @@ const login = async function() {
 
     const text = await response.text()
 
-    // If responsw was 200 OK redirect, if not show given error message
+    console.log("response", text)
+
+    // If response was 200 OK redirect, if not show given error message
     const errorMessage = document.querySelector( '#error' )
     console.log("status", response.status)
     if (response.status == 200) {
