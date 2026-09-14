@@ -1,108 +1,16 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
-===
+## Scoredisplay - The very creative name for my Assignment 3 project
 
-Due: September 15th, by 1:59 PM.
-
-This assignment continues where we left off in A2, extending it to use a popular Node.js server framework (express), a database (mongodb), and a CSS application framework / template of your choice (Bootstrap, Material Design, Semantic UI, Pure etc.)
-
-Baseline Requirements
----
-
-Your application is required to implement the following functionalities:
-
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
-
-Your application is required to demonstrate the use of the following concepts:  
-
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication, and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist, however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. Deploy your project to Render and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Render, it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-yourfirstname-yourlastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-firstname-lastname`.
-
-Achievements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended achievements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. This is the hardest achievement in Webware; you have been warned!  
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.
-- (up to 5 points) List up to five Express middleware packages you used and a short (one sentence) summary of what each one does. THESE MUST BE SEPARATE PACKAGES THAT YOU INSTALL VIA NPM, NOT THE ONES INCLUDED WITH EXPRESS. So express.json and express.static don't count here. For a starting point on middleware, see [this list](https://expressjs.com/en/resources/middleware.html).
-
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of the four principles* (four paragraphs, 500 words in total).
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-A link to your project running on render.
+A link to your project running on render:
+https://a3-ryanveith.onrender.com/
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
+The goal of the application was to take my assignent 2 and get it running with MongoDb and Express. I even expanded on it to maek the user interface keeping track of your scores for various games better.
+I did not face any real challanges making moving the application over to mongodb. I did have problems getting onclick=function() to work for buttons but I was able to ask a TA for help and still ended up doing some event listeners in the end since thye were just working better for more flexibility.  Mostly I struggled with various parts of the achivements. Biggest wast of time there was trying to add middleware after I already had stuff working which was not the smartest decision on my part in the end the Faveicon was defninly worth it to add.
+
+I used session based authetication with the given cookie library. First I looked into Auth0 but I was truggling with unserdnagin the documentation and how I would even start implemented it so I then started looking for alternatives. The inteal idea for this was that since I was already having to store username as a cookie since otherwise the website no longer remembers who it is supposed to be after login, I wanted to see if I could extend this to a valid authentication strategy. It worked
+
+The CSS framework I used was pure-min. I chose it very early on in the project for 2 reasons, 1 I was really liking this a a lightweight project and did not want to have to add the intermediate steps that were required for mantine. 2 I kinda liked my color sheme for project 2 and did not want it complelty overwritten and pure is such a small library that parts of it are left for you for you to choose. I did have to override button color to increase the contrast slighly. I also added a css rule for focusing object because I wanted what is focused to be more apparent then just the small blue outline, so now it turns the background beige. I also changed the backroudn color of the pure-u-1-2 grid element to aquamarine since I wanted the two colomns I had for inputing data and showcasing it to both stand out and feel more unified. Finally I added some padding to the form and changed min-hight and max-width. Min height was required for faster loading ad data shows up when the async return so form cant squish to small or it has to take time to unsquish. The other changes were a miskae I had to correct at the very end. All thoughout testing I had the inspect tool open and it was looking fine, but when I closed it I realise that full widt of computer screen was a bit much and had to limit it. There were a few other changes if you look at min.css but nothing where I had to override somthing else just small stuff like making text bigger so easier to read and removing ul bulletpoints becaue I really dislike the default ones. 
 
 ## Technical Achievements
 - **Tech Achievement 1**: I managed to get the lighthouse tests to 100%, this was harder then I thought it would be. First I did not have a description metatag for what the website was and needed to use the main tag to help organize my text better. I also did not have a high enough color constrast between background and foreground colors when using pure's default button coloring sheme. Even with this color changes I also had to increase the text size to comply with the AAA for the standars Lighthouse linked me to on color contrast https://dequeuniversity.com/rules/axe/4.12/color-contrast. Finnaly I was stuck on 99% preformance and I was worried that it because lighthouse was giving me the "Chrome extensions negatively affected this page's load performance" warning, and ocassionaly for seemingly no reason it would be down at 70% but the what was causing this was Total Blocking Time metric and I realised that of course it is blockign on needing to fetch the style sheet but because pure is so small it was only taking 250 ms and I was not realising that was the problem. Having pure-min as a part of the pubic css rather then somthing I need to load fixed this. Still have to run it in incognito or sometimes it complains. One other thing I had to do after I thought I was done was fix some layout shifting because I was not saving the size for what is adds once users data loads. 
